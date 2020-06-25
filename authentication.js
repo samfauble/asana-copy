@@ -1,20 +1,25 @@
 'use strict';
 
+const redirect_uri = 'https://zapier.com/dashboard/auth/oauth/return/App109037CLIAPI/'
+
 const getAccessToken = async (z, bundle) => {
+
+  //Exchange code for access token
   const response = await z.request({
-    url: 'https://auth-json-server.zapier-staging.com/oauth/access-token',
+    url: `https://app.asana.com/-/oauth_token?code=${bundle.inputData.code}`,
     method: 'POST',
     body: {
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET,
+      client_id: '{{process.env.CLIENT_ID}}',
+      client_secret: '{{process.env.CLIENT_SECRET}}',
       grant_type: 'authorization_code',
-      code: bundle.inputData.code,
+      redirect_uri
 
       // Extra data can be pulled from the querystring. For instance:
       // 'accountDomain': bundle.cleanedRequest.querystring.accountDomain
     },
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
   });
+
 
   if (response.status !== 200) {
     throw new z.errors.Error(
@@ -24,7 +29,7 @@ const getAccessToken = async (z, bundle) => {
       response.status
     );
   }
-
+  
   // This function should return `access_token`.
   // If your app does an app refresh, then `refresh_token` should be returned here
   // as well
@@ -36,7 +41,7 @@ const getAccessToken = async (z, bundle) => {
 
 const refreshAccessToken = async (z, bundle) => {
   const response = await z.request({
-    url: 'https://auth-json-server.zapier-staging.com/oauth/refresh-token',
+    url: 'https://app.asana.com/-/oauth_token',
     method: 'POST',
     body: {
       client_id: process.env.CLIENT_ID,
@@ -107,11 +112,11 @@ module.exports = {
     type: 'oauth2',
     oauth2Config: {
       authorizeUrl: {
-        url: 'https://auth-json-server.zapier-staging.com/oauth/authorize',
+        url: 'https://app.asana.com/-/oauth_authorize',
         params: {
           client_id: '{{process.env.CLIENT_ID}}',
-          state: '{{bundle.inputData.state}}',
-          redirect_uri: '{{bundle.inputData.redirect_uri}}',
+          client_secret:'{{process.env.CLIENT_SECRET}}',
+          redirect_uri,
           response_type: 'code',
         },
       },
