@@ -6,7 +6,7 @@ const {
 
 const createNewTask = require("./creates/new_task");
 
-const getNewTask = require("./triggers\\new_task");
+const getNewTask = require("./triggers/new_task");
 
 const getNewUser = require("./triggers\\new_user");
 
