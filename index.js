@@ -4,7 +4,7 @@ const {
   afters = [],
 } = require('./authentication');
 
-const createNewTask = require("./creates\\new_task");
+const createNewTask = require("./creates/new_task");
 
 const getNewTask = require("./triggers\\new_task");
 
