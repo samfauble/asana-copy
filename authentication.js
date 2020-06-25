@@ -10,7 +10,6 @@ const getAccessToken = async (z, bundle) => {
       client_secret: process.env.CLIENT_SECRET,
       grant_type: 'authorization_code',
       code: bundle.inputData.code,
-      redirect_uri: '{{bundle.inputData.redirect_uri}}',
 
       // Extra data can be pulled from the querystring. For instance:
       // 'accountDomain': bundle.cleanedRequest.querystring.accountDomain
@@ -45,7 +44,6 @@ const refreshAccessToken = async (z, bundle) => {
       client_secret: process.env.CLIENT_SECRET,
       grant_type: 'refresh_token',
       refresh_token: bundle.authData.refresh_token,
-      redirect_uri: '{{bundle.inputData.redirect_uri}}',
     },
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
   });
