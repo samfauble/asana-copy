@@ -1,6 +1,6 @@
 'use strict';
 
-const redirect_uri = 'https://zapier.com/dashboard/auth/oauth/return/App109037CLIAPI/'
+const redirect_uri = 'https://zapier.com/dashboard/auth/oauth/return/App109213CLIAPI/'
 
 const getAccessToken = async (z, bundle) => {
 
@@ -12,7 +12,7 @@ const getAccessToken = async (z, bundle) => {
       client_id: '{{process.env.CLIENT_ID}}',
       client_secret: '{{process.env.CLIENT_SECRET}}',
       grant_type: 'authorization_code',
-      redirect_uri: '{{bundle.authData.redirect_uri}}'
+      redirect_uri,
 
       // Extra data can be pulled from the querystring. For instance:
       // 'accountDomain': bundle.cleanedRequest.querystring.accountDomain
@@ -116,7 +116,7 @@ module.exports = {
         params: {
           client_id: '{{process.env.CLIENT_ID}}',
           client_secret:'{{process.env.CLIENT_SECRET}}',
-          redirect_uri:'{{bundle.authData.redirect_uri}}',
+          redirect_uri,
           response_type: 'code',
         },
       },
