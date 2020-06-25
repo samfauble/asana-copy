@@ -114,7 +114,8 @@ module.exports = {
         params: {
           client_id: '{{process.env.CLIENT_ID}}',
           state: '{{bundle.inputData.state}}',
-          redirect_uri: '{{bundle.inputData.redirect_uri}}',
+          redirect_uri,
+          //redirect_uri: '{{bundle.inputData.redirect_uri}}',
           response_type: 'code',
         },
       },
