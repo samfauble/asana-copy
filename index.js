@@ -8,17 +8,17 @@ const createNewTask = require("./creates/new_task");
 
 const getNewTask = require("./triggers/new_task");
 
-const getNewUser = require("./triggers\\new_user");
+const getNewUser = require("./triggers/new_user");
 
-const getNewProject = require("./triggers\\new_project");
+const getNewProject = require("./triggers/new_project");
 
-const getCompletedTask = require("./triggers\\completed_task");
+const getCompletedTask = require("./triggers/completed_task");
 
-const getNewTeam = require("./triggers\\new_team");
+const getNewTeam = require("./triggers/new_team");
 
-const createProject = require("./creates\\project");
+const createProject = require("./creates/project");
 
-const createSubtask = require("./creates\\subtask");
+const createSubtask = require("./creates/subtask");
 
 module.exports = {
   // This is just shorthand to reference the installed dependencies you have.
