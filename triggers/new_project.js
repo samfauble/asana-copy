@@ -1,3 +1,4 @@
+const { nameIdKey } = require('../utils/util')
 // triggers on a new new project with a certain tag
 const perform = async (z, bundle) => {
   const response = await z.request({
@@ -7,7 +8,8 @@ const perform = async (z, bundle) => {
     }
   });
   // this should return an array of objects
-  return response.data;
+  nameIdKey(response.data.data, 'gid')
+  return response.data.data;
 };
 
 module.exports = {

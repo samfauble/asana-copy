@@ -14,8 +14,6 @@ const getNewProject = require("./triggers/new_project");
 
 const getCompletedTask = require("./triggers/completed_task");
 
-const getNewTeam = require("./triggers/new_team");
-
 const createProject = require("./creates/project");
 
 const createSubtask = require("./creates/subtask");
@@ -40,7 +38,6 @@ module.exports = {
     [getNewUser.key]: getNewUser,
     [getNewProject.key]: getNewProject,
     [getCompletedTask.key]: getCompletedTask,
-    [getNewTeam.key]: getNewTeam
   },
 
   // If you want your searches to show up, you better include it here!

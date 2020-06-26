@@ -1,3 +1,4 @@
+const { nameIdKey } = require('../utils/util')
 // triggers on a new new user with a certain tag
 const perform = async (z, bundle) => {
   const response = await z.request({
@@ -11,12 +12,7 @@ const perform = async (z, bundle) => {
   const res = response.data.data
   
   //change key 'gid' to 'id'
-  res.map((user) => {
-    Object.defineProperty(user, 'id',
-    Object.getOwnPropertyDescriptor(user, 'gid'));
-    delete user['gid'];
-  })
-
+  nameIdKey(res, 'gid')
   return res;
 };
 

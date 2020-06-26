@@ -1,14 +1,19 @@
+const { nameIdKey } = require('../utils/util')
+
 // triggers on a new completed task with a certain tag
 const perform = async (z, bundle) => {
-  const dateTime = new Date(Date.now())
+  const dateTime = new Date(Date.now()).toISOString()
+  z.console.log(dateTime)
   const response = await z.request({
-    url: `https://app.asana.com/api/1.0/tasks?workspace=${bundle.inputData.workspace_gid}&project=${bundle.inputData.project_gid}&completed_since=${dateTime}`,
+    url: `https://app.asana.com/api/1.0/tasks`,
     params: {
-      tag: bundle.inputData.tagName
+      project: bundle.inputData.project_gid,
+      completed_since: dateTime
     }
   });
   // this should return an array of objects
-  return response.data;
+  nameIdKey(response.data.data, 'gid')
+  return response.data.data;
 };
 
 module.exports = {
@@ -28,7 +33,6 @@ module.exports = {
     // `inputFields` defines the fields a user could provide
     // Zapier will pass them in as `bundle.inputData` later. They're optional.
     inputFields: [
-      {key: 'workspace_gid', label: 'Workspace', required: true},
       {key: 'project_gid', label: 'Project', required: true}
     ],
 

@@ -1,13 +1,13 @@
+const { nameIdKey } = require('../utils/util');
+
 // triggers on a new new task with a certain tag
 const perform = async (z, bundle) => {
   const response = await z.request({
     url: `https://app.asana.com/api/1.0/tasks?project=${bundle.inputData.project_gid}`,
-    params: {
-      tag: bundle.inputData.tagName
-    }
   });
   // this should return an array of objects
-  return response.data;
+  nameIdKey(response.data.data, 'gid');
+  return response.data.data;
 };
 
 module.exports = {
