@@ -7,7 +7,17 @@ const perform = async (z, bundle) => {
     }
   });
   // this should return an array of objects
-  return response.data;
+
+  const res = response.data.data
+  
+  //change key 'gid' to 'id'
+  res.map((user) => {
+    Object.defineProperty(user, 'id',
+    Object.getOwnPropertyDescriptor(user, 'gid'));
+    delete user['gid'];
+  })
+
+  return res;
 };
 
 module.exports = {
