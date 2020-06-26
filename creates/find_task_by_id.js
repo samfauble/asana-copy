@@ -1,24 +1,29 @@
-// triggers on a new new team with a certain tag
+// create a particular find task by id by name
 const perform = async (z, bundle) => {
+  const url = `/workspaces/${bundle.inputData.workspace_gid}/tasks/search`
   const response = await z.request({
-    url: `https://app.asana.com/api/1.0/organizations/${bundle.inputData.workspace_gid}/teams`,
-    params: {
-      tag: bundle.inputData.tagName
+    method: 'GET',
+    url,
+    // if `body` is an object, it'll automatically get run through JSON.stringify
+    // if you don't want to send JSON, pass a string in your chosen format here instead
+    body: {
+      workspace_gid: bundle.inputData.workspace_gid,
+      text: bundle.inputData.text_search
     }
   });
-  // this should return an array of objects
+  // this should return a single object
   return response.data;
 };
 
 module.exports = {
   // see here for a full list of available properties:
-  // https://github.com/zapier/zapier-platform/blob/master/packages/schema/docs/build/schema.md#triggerschema
-  key: 'new_team',
-  noun: 'New Team',
+  // https://github.com/zapier/zapier-platform/blob/master/packages/schema/docs/build/schema.md#createschema
+  key: 'find_task_by_id',
+  noun: 'Find Task By Id',
 
   display: {
-    label: 'New New Team',
-    description: 'Triggers when a new new team is created.'
+    label: 'Find Task By Id',
+    description: 'Finds task by id, probably with input from previous steps.'
   },
 
   operation: {
@@ -26,8 +31,10 @@ module.exports = {
 
     // `inputFields` defines the fields a user could provide
     // Zapier will pass them in as `bundle.inputData` later. They're optional.
+    // End-users will map data into these fields. In general, they should have any fields that the API can accept. Be sure to accurately mark which fields are required!
     inputFields: [
-      {key: 'workspace_gid', label: 'Workplace', required: true}
+      {key: 'workspace_gid', label: 'Workspace', required: true},
+      {key: 'text_search', label: 'Search Text', required: false}
     ],
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

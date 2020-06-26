@@ -1,7 +1,8 @@
 // triggers on a new completed task with a certain tag
 const perform = async (z, bundle) => {
+  const dateTime = new Date(Date.now())
   const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url: `https://app.asana.com/api/1.0/tasks?workspace=${bundle.inputData.workspace_gid}&project=${bundle.inputData.project_gid}&completed_since=${dateTime}`,
     params: {
       tag: bundle.inputData.tagName
     }
@@ -26,7 +27,10 @@ module.exports = {
 
     // `inputFields` defines the fields a user could provide
     // Zapier will pass them in as `bundle.inputData` later. They're optional.
-    inputFields: [],
+    inputFields: [
+      {key: 'workspace_gid', label: 'Workspace', required: true},
+      {key: 'project_gid', label: 'Project', required: true}
+    ],
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example
     // from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of

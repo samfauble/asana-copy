@@ -1,7 +1,7 @@
 // triggers on a new new task with a certain tag
 const perform = async (z, bundle) => {
   const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url: `https://app.asana.com/api/1.0/tasks`,
     params: {
       tag: bundle.inputData.tagName
     }

@@ -1,12 +1,17 @@
 // create a particular subtask by name
 const perform = async (z, bundle) => {
+  const url = `https://app.asana.com/api/1.0/tasks/${bundle.inputData.task_gid}/subtasks`
   const response = await z.request({
     method: 'POST',
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url,
     // if `body` is an object, it'll automatically get run through JSON.stringify
     // if you don't want to send JSON, pass a string in your chosen format here instead
     body: {
-      name: bundle.inputData.name
+      body: {
+        [bundle.inputData.subtask_key]: `${bundle.inputData.subtask_value}`
+      },
+      task_gid: `${bundle.inputData.task_gid}`,
+      pretty: true,
     }
   });
   // this should return a single object
@@ -31,8 +36,9 @@ module.exports = {
     // Zapier will pass them in as `bundle.inputData` later. They're optional.
     // End-users will map data into these fields. In general, they should have any fields that the API can accept. Be sure to accurately mark which fields are required!
     inputFields: [
-      {key: 'name', required: true},
-      {key: 'fave_meal', label: 'Favorite Meal', required: false}
+      {key: 'subtask_key', label: 'Subtask Name', required: true},
+      {key: 'subtask_value', label: 'Subtask Description', required: false},
+      {key: 'task_gid', label: 'Task ID', required: true}
     ],
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

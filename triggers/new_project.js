@@ -1,7 +1,7 @@
 // triggers on a new new project with a certain tag
 const perform = async (z, bundle) => {
   const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url: `https://app.asana.com/api/1.0/projects`,
     params: {
       tag: bundle.inputData.tagName
     }
@@ -17,8 +17,8 @@ module.exports = {
   noun: 'New Project',
 
   display: {
-    label: 'New New Project',
-    description: 'Triggers when a new new project is created.'
+    label: 'New Project',
+    description: 'Triggers when a new project is created.'
   },
 
   operation: {

@@ -3,14 +3,13 @@ const redirect_uri = "https://zapier.com/dashboard/auth/oauth/return/App109213CL
 
 const getAccessToken = async (z, bundle) => {
   const response = await z.request({
-    url: 'https://app.asana.com/-/oauth_token',
+    url: `https://app.asana.com/-/oauth_token?code=${bundle.inputData.code}`,
     method: 'POST',
     body: {
       client_id: process.env.CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
       grant_type: 'authorization_code',
-      code: bundle.inputData.code,
-
+      redirect_uri
       // Extra data can be pulled from the querystring. For instance:
       // 'accountDomain': bundle.cleanedRequest.querystring.accountDomain
     },
@@ -25,6 +24,8 @@ const getAccessToken = async (z, bundle) => {
       response.status
     );
   }
+
+  console.log(response)
 
   // This function should return `access_token`.
   // If your app does an app refresh, then `refresh_token` should be returned here
@@ -99,7 +100,7 @@ const handleBadResponses = (response, z, bundle) => {
 // response data for testing purposes. Your connection label can access any data
 // from the returned response using the `json.` prefix. eg: `{{json.username}}`.
 const test = (z, bundle) =>
-  z.request({ url: 'https://auth-json-server.zapier-staging.com/me' });
+  z.request({ url: 'https://app.asana.com/api/1.0/users/me' });
 
 module.exports = {
   config: {
