@@ -67,17 +67,17 @@ const body = (author, projectStatus, dueDate, projectNotes, startDate, workspace
 
 const performCreate = async (z, bundle) => {
   const url = `https://app.asana.com/api/1.0/projects`
-  const {project_author, project_status, project_due_date, project_notes, project_start_date, project_workspace_gid} = bundle.inputData
+  const {project_author, project_status, project_due_date, project_notes, project_start_date, workspace_gid} = bundle.inputData
   const response = await z.request({
     method: 'POST',
     url,
     // if `body` is an object, it'll automatically get run through JSON.stringify
     // if you don't want to send JSON, pass a string in your chosen format here instead
     body: {
-      data: body(project_author, project_status, project_due_date, project_notes, project_start_date, project_workspace_gid),
+      data: body(project_author, project_status, project_due_date, project_notes, project_start_date, workspace_gid),
     },
     params: {
-      workspace: project_workspace_gid
+      workspace: workspace_gid
     }
   });
   // this should return a single object
@@ -130,7 +130,7 @@ module.exports = {
         {key: 'project_due_date', label: 'Due Date (yyyy-mm-dd)', required: true},
         {key: 'project_notes', label: 'Notes', required: true},
         {key: 'project_start_date', label: 'Start Date (yyyy-mm-dd)', required: true},
-        {key: 'project_workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.workspace_name'}
+        {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name'}
       ],
       perform: performCreate
     },

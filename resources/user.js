@@ -1,35 +1,15 @@
+const { nameIdKey } = require('../utils/util')
+
 // get a list of users
 const performList = async (z, bundle) => {
   const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url: 'https://app.asana.com/api/1.0/users',
     params: {
       order_by: 'id desc'
     }
   });
-  return response.data
-};
-
-// find a particular user by name (or other search criteria)
-const performSearch = async (z, bundle) => {
-  const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    params: {
-      name: bundle.inputData.name
-    }
-  });
-  return response.data
-};
-
-// creates a new user
-const performCreate = async (z, bundle) => {
-  const response = await z.request({
-    method: 'POST',
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    body: {
-      name: bundle.inputData.name // json by default
-    }
-  });
-  return response.data
+  nameIdKey(response.data.data, 'gid')
+  return response.data.data
 };
 
 module.exports = {
@@ -64,32 +44,6 @@ module.exports = {
       // Zapier will pass them in as `bundle.inputData` later. They're optional on triggers, but required on searches and creates.
       inputFields: []
     }
-  },
-
-  search: {
-    display: {
-      label: 'Find User',
-      description: 'Finds a user give.'
-    },
-    operation: {
-      inputFields: [
-        {key: 'name', required: true}
-      ],
-      perform: performSearch
-    },
-  },
-
-  create: {
-    display: {
-      label: 'Create User',
-      description: 'Creates a new user.'
-    },
-    operation: {
-      inputFields: [
-        {key: 'name', required: true}
-      ],
-      perform: performCreate
-    },
   },
 
   // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

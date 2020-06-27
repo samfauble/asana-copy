@@ -4,8 +4,6 @@ const {
   afters = [],
 } = require('./authentication');
 
-const getNewUser = require("./triggers/new_user");
-
 const getCompletedTask = require("./triggers/completed_task");
 
 const createSubtask = require("./creates/subtask");
@@ -16,7 +14,7 @@ const taskResource = require('./resources/task')
 
 const workspaceResource = require("./resources/workspace");
 
-const userResource = require("./resources\\user");
+const userResource = require("./resources/user");
 
 module.exports = {
   // This is just shorthand to reference the installed dependencies you have.
@@ -32,7 +30,6 @@ module.exports = {
 
   // If you want your trigger to show up, you better include it here!
   triggers: {
-    [getNewUser.key]: getNewUser,
     [getCompletedTask.key]: getCompletedTask,
   },
 
