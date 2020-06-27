@@ -127,9 +127,9 @@ module.exports = {
       inputFields: [
         {key: 'project_author', label: 'Author', required: true},
         {key: 'project_status', label: 'Project Status', required: true},
-        {key: 'project_due_date', label: 'Due Date (yyyy-mm-dd)', required: true},
-        {key: 'project_notes', label: 'Notes', required: true},
-        {key: 'project_start_date', label: 'Start Date (yyyy-mm-dd)', required: true},
+        {key: 'project_due_date', label: 'Due Date', helpText: 'yyyy-mm-dd', required: false},
+        {key: 'project_notes', label: 'Notes', required: false},
+        {key: 'project_start_date', label: 'Start Date', helpText: 'yyyy-mm-dd', required: false},
         {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name'}
       ],
       perform: performCreate

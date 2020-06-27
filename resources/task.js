@@ -32,36 +32,41 @@ const performSearch = async (z, bundle) => {
 };
 
 // create a particular new task by name
-const body = (task, description, dueDate) => {
+const body = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
+  const uid = require('uid')
+  
   return {
-      "data": {
-        "approval_status": "pending",
-        "assignee": "1181737955319118",
-        "assignee_status": "upcoming",
-        "completed": false,
-        "due_on": dueDate,
-        "external": {
-          "data": "A blob of information",
-          "gid": uid(37)
-        },
-        "liked": false,
-        "name": task,
-        "notes": description,
-        "projects": [
-          "1181738019307553"
-        ],
-        "resource_subtype": "default_task"
+    "data": {
+      "approval_status": "pending",
+      "assignee": assigneeId,
+      "assignee_status": "upcoming",
+      "completed": false,
+      "due_on": dueDate,
+      "external": {
+        "data": "A blob of information",
+        "gid": uid(37)
+      },
+      "followers": [],
+      "html_notes": `<body>${notes}</body>`,
+      "liked": true,
+      "name": taskName,
+      "notes": notes,
+      "resource_subtype": "default_task",
+      "start_on": startDate,
+      "tags": [],
+      "workspace": workspace
     }
   }
 }
 const performCreate = async (z, bundle) => {
+  const {assignee_id, due_date, task_name, notes, start_date, workspace_gid} = bundle.inputData
   const url = 'https://app.asana.com/api/1.0/tasks'
   const response = await z.request({
     method: 'POST',
     url,
     // if `body` is an object, it'll automatically get run through JSON.stringify
     // if you don't want to send JSON, pass a string in your chosen format here instead
-    body: body(bundle.inputData.task_name, bundle.inputData.task_desc, bundle.inputData.due_date)
+    body: body(assignee_id, due_date, task_name, notes, start_date, workspace_gid)
   });
   // this should return a single object
   return response.data;
@@ -132,15 +137,20 @@ module.exports = {
         },
         {
           key: 'task_desc',
-          required: true,
+          required: false,
           label: 'Task Description',
           helpText: 'Describe the task',
         },
         {
           key: 'due_date',
-          required: true,
+          required: false,
           label: 'Due Date (yyyy-mm-dd)',
         },
+      {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name', altersDynamicFields: true},
+      {key: 'project_gid', label: 'Project', required: true, dynamic: 'projectList.id.name', altersDynamicFields: true},
+      {key: 'assignee_id', label: 'Assignee', required: true, dynamic: 'userList.id.name'},
+      {key: 'notes', label: 'Notes', required: false},
+      {key: 'start_date', label: 'Start Date', helpText:'yyyy-mm-dd', required: false},
       ],
       perform: performCreate
     },
