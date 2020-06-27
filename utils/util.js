@@ -1,6 +1,6 @@
+const uid = require('uid')
+
 const body = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
-    const uid = require('uid')
-    
     return {
       "data": {
         "approval_status": "pending",
@@ -25,6 +25,7 @@ const body = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
     }
   }
 
+//changes field name "gid" to field "id"
 const nameIdKey = (objectList, toBecomeIdKey) => {
     objectList.map((user) => {
         Object.defineProperty(user, 'id',

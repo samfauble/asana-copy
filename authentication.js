@@ -10,22 +10,17 @@ const getAccessToken = async (z, bundle) => {
       client_secret: process.env.CLIENT_SECRET,
       grant_type: 'authorization_code',
       redirect_uri
-      // Extra data can be pulled from the querystring. For instance:
-      // 'accountDomain': bundle.cleanedRequest.querystring.accountDomain
     },
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
   });
 
   if (response.status !== 200) {
     throw new z.errors.Error(
-      // This message is surfaced to the user
       'Unable to fetch access token: ' + response.content,
       'getAccessTokenError',
       response.status
     );
   }
-
-  console.log(response)
 
   // This function should return `access_token`.
   // If your app does an app refresh, then `refresh_token` should be returned here
@@ -51,7 +46,6 @@ const refreshAccessToken = async (z, bundle) => {
 
   if (response.status !== 200) {
     throw new z.errors.Error(
-      // This message is surfaced to the user
       'Unable to fetch access token: ' + response.content,
       'refreshAccessTokenError',
       response.status
@@ -84,7 +78,6 @@ const includeBearerToken = (request, z, bundle) => {
 const handleBadResponses = (response, z, bundle) => {
   if (response.status === 401) {
     throw new z.errors.Error(
-      // This message is surfaced to the user
       'The access token you supplied is incorrect',
       'AuthenticationError',
       response.status
@@ -104,8 +97,6 @@ const test = (z, bundle) =>
 
 module.exports = {
   config: {
-    // OAuth2 is a web authentication standard. There are a lot of configuration
-    // options that will fit most any situation.
     type: 'oauth2',
     oauth2Config: {
       authorizeUrl: {
@@ -114,7 +105,6 @@ module.exports = {
           client_id: '{{process.env.CLIENT_ID}}',
           state: '{{bundle.inputData.state}}',
           redirect_uri,
-          //redirect_uri: '{{bundle.inputData.redirect_uri}}',
           response_type: 'code',
         },
       },

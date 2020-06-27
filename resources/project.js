@@ -67,43 +67,40 @@ const body = (author, projectStatus, dueDate, projectNotes, startDate, workspace
 
 const performCreate = async (z, bundle) => {
   const url = `https://app.asana.com/api/1.0/projects`
-  const {project_author, project_status, project_due_date, project_notes, project_start_date, workspace_gid} = bundle.inputData
+  const {
+          project_author, 
+          project_status, 
+          project_due_date, 
+          project_notes, 
+          project_start_date, 
+          workspace_gid
+        } = bundle.inputData
+
   const response = await z.request({
     method: 'POST',
     url,
-    // if `body` is an object, it'll automatically get run through JSON.stringify
-    // if you don't want to send JSON, pass a string in your chosen format here instead
     body: {
-      data: body(project_author, project_status, project_due_date, project_notes, project_start_date, workspace_gid),
+      data: body(
+                  project_author, 
+                  project_status, 
+                  project_due_date,
+                  project_notes, 
+                  project_start_date, 
+                  workspace_gid
+                ),
     },
     params: {
       workspace: workspace_gid
     }
   });
-  // this should return a single object
+
   return response.data;
 };
 
 module.exports = {
-  // see here for a full list of available properties:
-  // https://github.com/zapier/zapier-platform/blob/master/packages/schema/docs/build/schema.md#resourceschema
+  
   key: 'project',
   noun: 'Project',
-
-  // If `get` is defined, it will be called after a `search` or `create`
-  // useful if your `searches` and `creates` return sparse objects
-  // get: {
-  //   display: {
-  //     label: 'Get Task',
-  //     description: 'Gets a task.'
-  //   },
-  //   operation: {
-  //     inputFields: [
-  //       {key: 'id', required: true}
-  //     ],
-  //     perform: defineMe
-  //   }
-  // },
 
   list: {
     display: {
@@ -112,8 +109,6 @@ module.exports = {
     },
     operation: {
       perform: performList,
-      // `inputFields` defines the fields a user could provide
-      // Zapier will pass them in as `bundle.inputData` later. They're optional on triggers, but required on searches and creates.
       inputFields: []
     }
   },
@@ -125,12 +120,39 @@ module.exports = {
     },
     operation: {
       inputFields: [
-        {key: 'project_author', label: 'Author', required: true},
-        {key: 'project_status', label: 'Project Status', required: true},
-        {key: 'project_due_date', label: 'Due Date', helpText: 'yyyy-mm-dd', required: false},
-        {key: 'project_notes', label: 'Notes', required: false},
-        {key: 'project_start_date', label: 'Start Date', helpText: 'yyyy-mm-dd', required: false},
-        {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name'}
+        {
+          key: 'project_author', 
+          label: 'Author', 
+          required: true
+        },
+        {
+          key: 'project_status', 
+          label: 'Project Status', 
+          required: true
+        },
+        {
+          key: 'project_due_date', 
+          label: 'Due Date', 
+          helpText: 'yyyy-mm-dd', 
+          required: false
+        },
+        {
+          key: 'project_notes', 
+          label: 'Notes',
+          required: false
+        },
+        {
+          key: 'project_start_date', 
+          label: 'Start Date', 
+          helpText: 'yyyy-mm-dd', 
+          required: false
+        },
+        {
+          key: 'workspace_gid', 
+          label: 'Workspace', 
+          required: true, 
+          dynamic: 'workspaceList.id.name'
+        }
       ],
       perform: performCreate
     },

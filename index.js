@@ -17,8 +17,6 @@ const workspaceResource = require("./resources/workspace");
 const userResource = require("./resources/user");
 
 module.exports = {
-  // This is just shorthand to reference the installed dependencies you have.
-  // Zapier will need to know these before we can upload.
   version: require('./package.json').version,
   platformVersion: require('zapier-platform-core').version,
 

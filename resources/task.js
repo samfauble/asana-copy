@@ -1,9 +1,7 @@
 const { nameIdKey, body } = require('../utils/util')
-const uid = require('uid')
 
 // get a list of tasks
 const performList = async (z, bundle) => {
-  z.console.log(bundle)
   const response = await z.request({
     url: 'https://app.asana.com/api/1.0/tasks',
     params: {
@@ -27,73 +25,35 @@ const performSearch = async (z, bundle) => {
       text: bundle.inputData.text_search
     }
   });
-  // this should return a single object
+
   return response.data;
 };
 
 // create a particular new task by name
-/*
-const body = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
-  const uid = require('uid')
-  
-  return {
-    "data": {
-      "approval_status": "pending",
-      "assignee": assigneeId,
-      "assignee_status": "upcoming",
-      "completed": false,
-      "due_on": dueDate,
-      "external": {
-        "data": "A blob of information",
-        "gid": uid(37)
-      },
-      "followers": [],
-      "html_notes": `<body>${notes}</body>`,
-      "liked": true,
-      "name": taskName,
-      "notes": notes,
-      "resource_subtype": "default_task",
-      "start_on": startDate,
-      "tags": [],
-      "workspace": workspace
-    }
-  }
-}
-*/
+
 const performCreate = async (z, bundle) => {
   const {assignee_id, due_date, task_name, notes, start_date, workspace_gid} = bundle.inputData
   const url = 'https://app.asana.com/api/1.0/tasks'
   const response = await z.request({
     method: 'POST',
     url,
-    // if `body` is an object, it'll automatically get run through JSON.stringify
-    // if you don't want to send JSON, pass a string in your chosen format here instead
-    body: body(assignee_id, due_date, task_name, notes, start_date, workspace_gid)
+    body: body(
+                assignee_id, 
+                due_date, 
+                task_name, 
+                notes, 
+                start_date, 
+                workspace_gid
+              )
   });
-  // this should return a single object
+
   return response.data;
 };
 
 module.exports = {
-  // see here for a full list of available properties:
-  // https://github.com/zapier/zapier-platform/blob/master/packages/schema/docs/build/schema.md#resourceschema
+  
   key: 'task',
   noun: 'Task',
-
-  // If `get` is defined, it will be called after a `search` or `create`
-  // useful if your `searches` and `creates` return sparse objects
-  // get: {
-  //   display: {
-  //     label: 'Get Task',
-  //     description: 'Gets a task.'
-  //   },
-  //   operation: {
-  //     inputFields: [
-  //       {key: 'id', required: true}
-  //     ],
-  //     perform: defineMe
-  //   }
-  // },
 
   list: {
     display: {
@@ -102,10 +62,14 @@ module.exports = {
     },
     operation: {
       perform: performList,
-      // `inputFields` defines the fields a user could provide
-      // Zapier will pass them in as `bundle.inputData` later. They're optional on triggers, but required on searches and creates.
+     
       inputFields: [
-        {key: 'project_gid', label: 'Project', required: true, dynamic: 'projectList.id.name'}
+        {
+          key: 'project_gid', 
+          label: 'Project', 
+          required: true, 
+          dynamic: 'projectList.id.name'
+        }
       ]
     }
   },
@@ -117,8 +81,17 @@ module.exports = {
     },
     operation: {
       inputFields: [
-        {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name'},
-        {key: 'text_search', label: 'Search Text', required: false}
+        {
+          key: 'workspace_gid', 
+          label: 'Workspace', 
+          required: true, 
+          dynamic: 'workspaceList.id.name'
+        },
+        {
+          key: 'text_search', 
+          label: 'Search Text', 
+          required: false
+        }
       ],
       perform: performSearch
     },
@@ -148,11 +121,37 @@ module.exports = {
           required: false,
           label: 'Due Date (yyyy-mm-dd)',
         },
-      {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name', altersDynamicFields: true},
-      {key: 'project_gid', label: 'Project', required: true, dynamic: 'projectList.id.name', altersDynamicFields: true},
-      {key: 'assignee_id', label: 'Assignee', required: true, dynamic: 'userList.id.name'},
-      {key: 'notes', label: 'Notes', required: false},
-      {key: 'start_date', label: 'Start Date', helpText:'yyyy-mm-dd', required: false},
+        {
+          key: 'workspace_gid', 
+          label: 'Workspace', 
+          required: true, 
+          dynamic: 'workspaceList.id.name', 
+          altersDynamicFields: true
+        },
+        {
+          key: 'project_gid', 
+          label: 'Project', 
+          required: true, 
+          dynamic: 'projectList.id.name', 
+          altersDynamicFields: true
+        },
+        {
+          key: 'assignee_id', 
+          label: 'Assignee', 
+          required: true, 
+          dynamic: 'userList.id.name'
+        },
+        {
+          key: 'notes', 
+          label: 'Notes', 
+          required: false
+        },
+        {
+          key: 'start_date', 
+          label: 'Start Date', 
+          helpText:'yyyy-mm-dd', 
+          required: false
+        },
       ],
       perform: performCreate
     },
