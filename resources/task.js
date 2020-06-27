@@ -1,4 +1,6 @@
 const { nameIdKey } = require('../utils/util')
+const uid = require('uid')
+
 // get a list of tasks
 const performList = async (z, bundle) => {
   z.console.log(bundle)
@@ -16,25 +18,53 @@ const performList = async (z, bundle) => {
 
 // find a particular task by name (or other search criteria)
 const performSearch = async (z, bundle) => {
+  const url = `https://app.asana.com/api/1.0/workspaces/${bundle.inputData.workspace_gid}/tasks/search`
   const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    params: {
-      name: bundle.inputData.name
+    method: 'GET',
+    url,
+    body: {
+      workspace_gid: bundle.inputData.workspace_gid,
+      text: bundle.inputData.text_search
     }
   });
-  return response.data
+  // this should return a single object
+  return response.data;
 };
 
-// creates a new task
+// create a particular new task by name
+const body = (task, description, dueDate) => {
+  return {
+      "data": {
+        "approval_status": "pending",
+        "assignee": "1181737955319118",
+        "assignee_status": "upcoming",
+        "completed": false,
+        "due_on": dueDate,
+        "external": {
+          "data": "A blob of information",
+          "gid": uid(37)
+        },
+        "liked": false,
+        "name": task,
+        "notes": description,
+        "projects": [
+          "1181738019307553"
+        ],
+        "resource_subtype": "default_task"
+    }
+  }
+}
 const performCreate = async (z, bundle) => {
+  const url = 'https://app.asana.com/api/1.0/tasks'
   const response = await z.request({
     method: 'POST',
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    body: {
-      name: bundle.inputData.name // json by default
-    }
+    url,
+    // if `body` is an object, it'll automatically get run through JSON.stringify
+    // if you don't want to send JSON, pass a string in your chosen format here instead
+    body: body(bundle.inputData.task_name, bundle.inputData.task_desc, bundle.inputData.due_date)
   });
-  return response.data
+  // this should return a single object
+  return response.data;
 };
 
 module.exports = {
@@ -60,7 +90,7 @@ module.exports = {
 
   list: {
     display: {
-      label: 'New Task',
+      label: 'New Task Resource',
       description: 'Lists the tasks.'
     },
     operation: {
@@ -73,12 +103,13 @@ module.exports = {
 
   search: {
     display: {
-      label: 'Find Task',
+      label: 'Find Task Resource',
       description: 'Finds a task give.'
     },
     operation: {
       inputFields: [
-        {key: 'name', required: true}
+        {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.workspace_name'},
+        {key: 'text_search', label: 'Search Text', required: false}
       ],
       perform: performSearch
     },
@@ -86,12 +117,28 @@ module.exports = {
 
   create: {
     display: {
-      label: 'Create Task',
+      label: 'Create Task Resource',
       description: 'Creates a new task.'
     },
     operation: {
       inputFields: [
-        {key: 'name', required: true}
+        {
+          key: 'task_name',
+          required: true,
+          label: 'Task Name',
+          helpText: 'Name the task',
+        },
+        {
+          key: 'task_desc',
+          required: true,
+          label: 'Task Description',
+          helpText: 'Describe the task',
+        },
+        {
+          key: 'due_date',
+          required: true,
+          label: 'Due Date (yyyy-mm-dd)',
+        },
       ],
       perform: performCreate
     },

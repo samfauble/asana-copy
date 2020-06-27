@@ -24,27 +24,64 @@ const performList = async (z, bundle) => {
   return response.data.data
 };
 
-// find a particular task by name (or other search criteria)
-const performSearch = async (z, bundle) => {
-  const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    params: {
-      name: bundle.inputData.name
-    }
-  });
-  return response.data
-};
-
 // creates a new task
+const body = (author, projectStatus, dueDate, projectNotes, startDate, workspace_gid) => {
+  return {
+      "data": {
+        "archived": false,
+        "color": "light-green",
+        "current_status": {
+          "author": {
+            "name": author
+          },
+          "color": "green",
+          "created_by": {
+            "name": "Greg Sanchez"
+          },
+          "html_text": `<body>${projectStatus}</body>`,
+          "modified_at": null,
+          "text": projectStatus,
+          "title": "Status Update - Jun 15"
+        },
+        "custom_fields": {
+          "4578152156": "Not Started",
+          "5678904321": "On Hold"
+        },
+        "default_view": "calendar",
+        "due_date": dueDate,
+        "followers": "12345,23456",
+        "html_notes": `<body>${projectNotes}</body>`,
+        "is_template": false,
+        "name": "Stuff to buy",
+        "notes": projectNotes,
+        "public": false,
+        "start_on": startDate,
+        "workspace": {
+          "gid": workspace_gid,
+          "resource_type": 'workspace',
+          'name': 'my_workspace'
+        }
+    }
+  }
+}
+
 const performCreate = async (z, bundle) => {
+  const url = `https://app.asana.com/api/1.0/projects`
+  const {project_author, project_status, project_due_date, project_notes, project_start_date, project_workspace_gid} = bundle.inputData
   const response = await z.request({
     method: 'POST',
-    url: 'https://jsonplaceholder.typicode.com/posts',
+    url,
+    // if `body` is an object, it'll automatically get run through JSON.stringify
+    // if you don't want to send JSON, pass a string in your chosen format here instead
     body: {
-      name: bundle.inputData.name // json by default
+      data: body(project_author, project_status, project_due_date, project_notes, project_start_date, project_workspace_gid),
+    },
+    params: {
+      workspace: project_workspace_gid
     }
   });
-  return response.data
+  // this should return a single object
+  return response.data;
 };
 
 module.exports = {
@@ -70,8 +107,8 @@ module.exports = {
 
   list: {
     display: {
-      label: 'New Task',
-      description: 'Lists the tasks.'
+      label: 'List Project Resource',
+      description: 'Lists projects.'
     },
     operation: {
       perform: performList,
@@ -81,27 +118,19 @@ module.exports = {
     }
   },
 
-  search: {
-    display: {
-      label: 'Find Task',
-      description: 'Finds a task give.'
-    },
-    operation: {
-      inputFields: [
-        {key: 'name', required: true}
-      ],
-      perform: performSearch
-    },
-  },
-
   create: {
     display: {
-      label: 'Create Task',
-      description: 'Creates a new task.'
+      label: 'Create Project Resource',
+      description: 'Creates a new project.'
     },
     operation: {
       inputFields: [
-        {key: 'name', required: true}
+        {key: 'project_author', label: 'Author', required: true},
+        {key: 'project_status', label: 'Project Status', required: true},
+        {key: 'project_due_date', label: 'Due Date (yyyy-mm-dd)', required: true},
+        {key: 'project_notes', label: 'Notes', required: true},
+        {key: 'project_start_date', label: 'Start Date (yyyy-mm-dd)', required: true},
+        {key: 'project_workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.workspace_name'}
       ],
       perform: performCreate
     },

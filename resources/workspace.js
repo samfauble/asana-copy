@@ -19,29 +19,6 @@ const performList = async (z, bundle) => {
   return list
 };
 
-// find a particular workspace by name (or other search criteria)
-const performSearch = async (z, bundle) => {
-  const response = await z.request({
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    params: {
-      name: bundle.inputData.name
-    }
-  });
-  return response.data
-};
-
-// creates a new workspace
-const performCreate = async (z, bundle) => {
-  const response = await z.request({
-    method: 'POST',
-    url: 'https://jsonplaceholder.typicode.com/posts',
-    body: {
-      name: bundle.inputData.name // json by default
-    }
-  });
-  return response.data
-};
-
 module.exports = {
   // see here for a full list of available properties:
   // https://github.com/zapier/zapier-platform/blob/master/packages/schema/docs/build/schema.md#resourceschema
@@ -75,33 +52,7 @@ module.exports = {
       inputFields: []
     }
   },
-
-  search: {
-    display: {
-      label: 'Find Workspace',
-      description: 'Finds a workspace give.'
-    },
-    operation: {
-      inputFields: [
-        {key: 'name', required: true}
-      ],
-      perform: performSearch
-    },
-  },
-
-  create: {
-    display: {
-      label: 'Create Workspace',
-      description: 'Creates a new workspace.'
-    },
-    operation: {
-      inputFields: [
-        {key: 'name', required: true}
-      ],
-      perform: performCreate
-    },
-  },
-
+  
   // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example
   // from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of
   // returned records, and have obvious placeholder values that we can show to any user.
