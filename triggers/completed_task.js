@@ -33,7 +33,11 @@ module.exports = {
     // `inputFields` defines the fields a user could provide
     // Zapier will pass them in as `bundle.inputData` later. They're optional.
     inputFields: [
-      {key: 'project_gid', label: 'Project', required: true}
+      {key: 'project_gid', 
+      label: 'Project', 
+      required: true,
+      dynamic: 'projectList.id.name'
+      }
     ],
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

@@ -33,7 +33,7 @@ module.exports = {
     // Zapier will pass them in as `bundle.inputData` later. They're optional.
     // End-users will map data into these fields. In general, they should have any fields that the API can accept. Be sure to accurately mark which fields are required!
     inputFields: [
-      {key: 'workspace_gid', label: 'Workspace', required: true},
+      {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.workspace_name'},
       {key: 'text_search', label: 'Search Text', required: false}
     ],
 

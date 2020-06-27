@@ -1,4 +1,4 @@
-const body = (author, projectStatus, dueDate, projectNotes, startDate) => {
+const body = (author, projectStatus, dueDate, projectNotes, startDate, workspace_gid) => {
   return {
       "data": {
         "archived": false,
@@ -29,7 +29,11 @@ const body = (author, projectStatus, dueDate, projectNotes, startDate) => {
         "notes": projectNotes,
         "public": false,
         "start_on": startDate,
-        "team": "12345"
+        "workspace": {
+          "gid": workspace_gid,
+          "resource_type": 'workspace',
+          'name': 'my_workspace'
+        }
     }
   }
 }
@@ -38,16 +42,19 @@ const body = (author, projectStatus, dueDate, projectNotes, startDate) => {
 
 // create a particular project by name
 const perform = async (z, bundle) => {
+  z.console.log(bundle.inputData)
   const url = `https://app.asana.com/api/1.0/projects`
-  const {project_author, project_status, project_due_date, project_notes, project_start_date} = bundle.inputData
+  const {project_author, project_status, project_due_date, project_notes, project_start_date, project_workspace_gid} = bundle.inputData
   const response = await z.request({
     method: 'POST',
     url,
     // if `body` is an object, it'll automatically get run through JSON.stringify
     // if you don't want to send JSON, pass a string in your chosen format here instead
     body: {
-      body: body(project_author, project_status, project_due_date, project_notes, start_date),
-      pretty: true
+      data: body(project_author, project_status, project_due_date, project_notes, project_start_date, project_workspace_gid),
+    },
+    params: {
+      workspace: project_workspace_gid
     }
   });
   // this should return a single object
@@ -74,9 +81,10 @@ module.exports = {
     inputFields: [
       {key: 'project_author', label: 'Author', required: true},
       {key: 'project_status', label: 'Project Status', required: true},
-      {key: 'project_due_date', label: 'Due Date', required: true},
+      {key: 'project_due_date', label: 'Due Date (yyyy-mm-dd)', required: true},
       {key: 'project_notes', label: 'Notes', required: true},
-      {key: 'project_start_date', label: 'Start Date', required: true}
+      {key: 'project_start_date', label: 'Start Date (yyyy-mm-dd)', required: true},
+      {key: 'project_workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.workspace_name'}
     ],
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

@@ -20,6 +20,10 @@ const createSubtask = require("./creates/subtask");
 
 const createFindTaskById = require("./creates/find_task_by_id");
 
+const taskResource = require("./resources/project");
+
+const workspaceResource = require("./resources/workspace");
+
 module.exports = {
   // This is just shorthand to reference the installed dependencies you have.
   // Zapier will need to know these before we can upload.
@@ -51,5 +55,8 @@ module.exports = {
     [createFindTaskById.key]: createFindTaskById
   },
 
-  resources: {},
+  resources: {
+    [taskResource.key]: taskResource,
+    [workspaceResource.key]: workspaceResource
+  },
 };

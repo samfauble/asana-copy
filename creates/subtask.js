@@ -38,7 +38,7 @@ module.exports = {
     inputFields: [
       {key: 'subtask_key', label: 'Subtask Name', required: true},
       {key: 'subtask_value', label: 'Subtask Description', required: false},
-      {key: 'task_gid', label: 'Task ID', required: true}
+      {key: 'task_gid', label: 'Task ID', required: true, dynamic: taskList.id.name}
     ],
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

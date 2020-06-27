@@ -1,3 +1,5 @@
+const uid = require('uid')
+
 const body = (task, description, dueDate) => {
   return {
       "data": {
@@ -8,7 +10,7 @@ const body = (task, description, dueDate) => {
         "due_on": dueDate,
         "external": {
           "data": "A blob of information",
-          "gid": "my_gid"
+          "gid": uid(37)
         },
         "liked": false,
         "name": task,
@@ -68,8 +70,7 @@ module.exports = {
       {
         key: 'due_date',
         required: true,
-        label: 'Assignee',
-        helpText: 'Identify the person responsible for the task',
+        label: 'Due Date (yyyy-mm-dd)',
       },
     ],
 
