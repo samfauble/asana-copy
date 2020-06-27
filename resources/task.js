@@ -1,4 +1,4 @@
-const { nameIdKey } = require('../utils/util')
+const { nameIdKey, body } = require('../utils/util')
 const uid = require('uid')
 
 // get a list of tasks
@@ -32,6 +32,7 @@ const performSearch = async (z, bundle) => {
 };
 
 // create a particular new task by name
+/*
 const body = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
   const uid = require('uid')
   
@@ -58,6 +59,7 @@ const body = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
     }
   }
 }
+*/
 const performCreate = async (z, bundle) => {
   const {assignee_id, due_date, task_name, notes, start_date, workspace_gid} = bundle.inputData
   const url = 'https://app.asana.com/api/1.0/tasks'
