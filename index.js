@@ -4,8 +4,6 @@ const {
   afters = [],
 } = require('./authentication');
 
-const createNewTask = require("./creates/new_task");
-
 const getNewTask = require("./triggers/new_task");
 
 const getNewUser = require("./triggers/new_user");
@@ -14,11 +12,7 @@ const getNewProject = require("./triggers/new_project");
 
 const getCompletedTask = require("./triggers/completed_task");
 
-const createProject = require("./creates/project");
-
 const createSubtask = require("./creates/subtask");
-
-const createFindTaskById = require("./creates/find_task_by_id");
 
 const projectResource = require("./resources/project");
 
@@ -51,10 +45,7 @@ module.exports = {
 
   // If you want your creates to show up, you better include it here!
   creates: {
-    [createNewTask.key]: createNewTask,
-    [createProject.key]: createProject,
     [createSubtask.key]: createSubtask,
-    [createFindTaskById.key]: createFindTaskById
   },
 
   resources: {
