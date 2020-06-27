@@ -1,10 +1,12 @@
 const { nameIdKey } = require('../utils/util')
 // get a list of tasks
 const performList = async (z, bundle) => {
+  z.console.log(bundle)
   const response = await z.request({
     url: 'https://app.asana.com/api/1.0/tasks',
     params: {
-      order_by: 'id desc'
+      order_by: 'id desc',
+      project: bundle.inputData.project_gid
     }
   });
 
