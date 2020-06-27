@@ -1,15 +1,47 @@
+const body = (assigneeId, dueDate, subtaskName, followerList, notes, taskParent, startDate, tagList, workspace) => {
+  const uid = require('uid')
+  
+  return {
+    "data": {
+      "approval_status": "pending",
+      "assignee": assigneeId,
+      "assignee_status": "upcoming",
+      "completed": false,
+      "due_on": dueDate,
+      "external": {
+        "data": "A blob of information",
+        "gid": uid(37)
+      },
+      "followers": followerList ? followerList : [],
+      "html_notes": `<body>${notes}</body>`,
+      "liked": true,
+      "name": subtaskName,
+      "notes": notes,
+      "parent": taskParent,
+      "projects": [
+        "12345"
+      ],
+      "resource_subtype": "default_task",
+      "start_on": startDate,
+      "tags": tagList ? tagList : [],
+      "workspace": workspace
+    }
+  }
+}
+
+
 // create a particular subtask by name
 const perform = async (z, bundle) => {
   const url = `https://app.asana.com/api/1.0/tasks/${bundle.inputData.task_gid}/subtasks`
+  const {assigneeId, dueDate, subtaskName, followerList, notes, task_gid, startDate, tagList, workspace} = bundle.inputData
+  
   const response = await z.request({
     method: 'POST',
     url,
     // if `body` is an object, it'll automatically get run through JSON.stringify
     // if you don't want to send JSON, pass a string in your chosen format here instead
-    body: {
-      body: {
-        [bundle.inputData.subtask_key]: `${bundle.inputData.subtask_value}`
-      },
+    params: {
+      body: body(assigneeId, dueDate, subtaskName, followerList, notes, task_gid, startDate, tagList, workspace),
       task_gid: `${bundle.inputData.task_gid}`,
       pretty: true,
     }
@@ -36,10 +68,18 @@ module.exports = {
     // Zapier will pass them in as `bundle.inputData` later. They're optional.
     // End-users will map data into these fields. In general, they should have any fields that the API can accept. Be sure to accurately mark which fields are required!
     inputFields: [
-      {key: 'subtask_key', label: 'Subtask Name', required: true},
-      {key: 'subtask_value', label: 'Subtask Description', required: false},
+      {key: 'assignee_id', label: 'Assignee', required: true},
+      {key: 'subtask_due_date', label: 'Due Date (yyyy-mm-dd)', required: false},
+      {key: 'subtask_workspace', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name', altersDynamicFields: true},
       {key: 'project_gid', label: 'Project', required: true, dynamic: 'projectList.id.name', altersDynamicFields: true},
-      {key: 'task_gid', label: 'Task', required: true, dynamic: 'taskList.id.name'}
+      {key: 'task_gid', label: 'Task', required: true, dynamic: 'taskList.id.name'},
+      {key: 'subtask_name', label: 'Name', required: true},
+      {key: 'follower_list', label: 'Follower List', required: false},
+      {key: 'subtask_notes', label: 'Notes', required: false},
+      {key: 'subtask_start_date', label: 'Start Date (yyyy-mm-dd)', required: false},
+      {key: 'subtask_tags', label: 'Tag List', required: false},
+      
+
     ],
 
     // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example

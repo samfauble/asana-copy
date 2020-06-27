@@ -16,6 +16,8 @@ const taskResource = require('./resources/task')
 
 const workspaceResource = require("./resources/workspace");
 
+const userResource = require("./resources\\user");
+
 module.exports = {
   // This is just shorthand to reference the installed dependencies you have.
   // Zapier will need to know these before we can upload.
@@ -45,6 +47,7 @@ module.exports = {
   resources: {
     [taskResource.key]: taskResource,
     [workspaceResource.key]: workspaceResource,
-    [projectResource.key]: projectResource
+    [projectResource.key]: projectResource,
+    [userResource.key]: userResource
   },
 };

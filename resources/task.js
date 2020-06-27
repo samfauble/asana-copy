@@ -97,7 +97,9 @@ module.exports = {
       perform: performList,
       // `inputFields` defines the fields a user could provide
       // Zapier will pass them in as `bundle.inputData` later. They're optional on triggers, but required on searches and creates.
-      inputFields: []
+      inputFields: [
+        {key: 'project_gid', label: 'Project', required: true, dynamic: 'projectList.id.name'}
+      ]
     }
   },
 
@@ -108,7 +110,7 @@ module.exports = {
     },
     operation: {
       inputFields: [
-        {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.workspace_name'},
+        {key: 'workspace_gid', label: 'Workspace', required: true, dynamic: 'workspaceList.id.name'},
         {key: 'text_search', label: 'Search Text', required: false}
       ],
       perform: performSearch
