@@ -20,7 +20,9 @@ const createSubtask = require("./creates/subtask");
 
 const createFindTaskById = require("./creates/find_task_by_id");
 
-const taskResource = require("./resources/project");
+const projectResource = require("./resources/project");
+
+const taskResource = require('./resources/task')
 
 const workspaceResource = require("./resources/workspace");
 
@@ -57,6 +59,7 @@ module.exports = {
 
   resources: {
     [taskResource.key]: taskResource,
-    [workspaceResource.key]: workspaceResource
+    [workspaceResource.key]: workspaceResource,
+    [projectResource.key]: projectResource
   },
 };
