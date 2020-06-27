@@ -4,11 +4,7 @@ const {
   afters = [],
 } = require('./authentication');
 
-const getNewTask = require("./triggers/new_task");
-
 const getNewUser = require("./triggers/new_user");
-
-const getNewProject = require("./triggers/new_project");
 
 const getCompletedTask = require("./triggers/completed_task");
 
@@ -34,9 +30,7 @@ module.exports = {
 
   // If you want your trigger to show up, you better include it here!
   triggers: {
-    [getNewTask.key]: getNewTask,
     [getNewUser.key]: getNewUser,
-    [getNewProject.key]: getNewProject,
     [getCompletedTask.key]: getCompletedTask,
   },
 

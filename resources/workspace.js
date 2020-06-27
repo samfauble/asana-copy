@@ -42,7 +42,7 @@ module.exports = {
 
   list: {
     display: {
-      label: 'New Workspace',
+      label: 'New Workspace Resource',
       description: 'Lists the workspaces.'
     },
     operation: {
@@ -52,7 +52,7 @@ module.exports = {
       inputFields: []
     }
   },
-  
+
   // In cases where Zapier needs to show an example record to the user, but we are unable to get a live example
   // from the API, Zapier will fallback to this hard-coded sample. It should reflect the data structure of
   // returned records, and have obvious placeholder values that we can show to any user.
