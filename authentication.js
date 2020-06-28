@@ -1,6 +1,7 @@
 'use strict';
 const redirect_uri = "https://zapier.com/dashboard/auth/oauth/return/App109213CLIAPI/"
 
+//Get access code
 const getAccessToken = async (z, bundle) => {
   const response = await z.request({
     url: `https://app.asana.com/-/oauth_token?code=${bundle.inputData.code}`,
@@ -31,6 +32,7 @@ const getAccessToken = async (z, bundle) => {
   };
 };
 
+//Refresh access token
 const refreshAccessToken = async (z, bundle) => {
   const response = await z.request({
     url: 'https://app.asana.com/-/oauth_token',
@@ -95,6 +97,7 @@ const handleBadResponses = (response, z, bundle) => {
 const test = (z, bundle) =>
   z.request({ url: 'https://app.asana.com/api/1.0/users/me' });
 
+//Exports
 module.exports = {
   config: {
     type: 'oauth2',
