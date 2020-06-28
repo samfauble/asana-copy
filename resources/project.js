@@ -139,12 +139,6 @@ module.exports = {
           required: false
         },
         {
-          key: 'project_start_date', 
-          label: 'Start Date', 
-          helpText: 'yyyy-mm-dd', 
-          required: false
-        },
-        {
           key: 'workspace_gid', 
           label: 'Workspace', 
           required: true, 

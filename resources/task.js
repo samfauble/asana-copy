@@ -118,7 +118,8 @@ module.exports = {
         {
           key: 'due_date',
           required: false,
-          label: 'Due Date (yyyy-mm-dd)',
+          label: 'Due Date',
+          helpText: 'yyyy-mm-dd'
         },
         {
           key: 'workspace_gid', 
@@ -143,12 +144,6 @@ module.exports = {
         {
           key: 'notes', 
           label: 'Notes', 
-          required: false
-        },
-        {
-          key: 'start_date', 
-          label: 'Start Date', 
-          helpText:'yyyy-mm-dd', 
           required: false
         },
       ],

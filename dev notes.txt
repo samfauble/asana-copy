@@ -1,0 +1,18 @@
+Elements:
+- Project
+	-- Needed for dynamic dropdown 
+	-- Trigger for new project
+	-- Create new project
+- Task
+	-- Needed for dynamic dropdown
+	-- Trigger for new project
+	-- Create new project
+	-- Find task by text*** 
+- User
+	-- Needed for dynamic dropdown 
+- Workspace
+	-- Needed for dynamic dropdown 
+
+
+
+***Unable to test; search is only available in Asana Premium memberships

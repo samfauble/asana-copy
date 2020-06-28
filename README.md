@@ -21,4 +21,13 @@ zapier link
 zapier push
 ```
 
+# Obtaining user credentials:
+Please remember to create a .env folder and populate it with CLIENT_ID and CLIENT_SECRET credentials from Asana
+
+- Log in to https://app.asana.com/-/login. If you don't have an account, sign up for one (for free)
+- At the homepage, click on the user icon in the top right corner and click "My Profile Settings"
+- Click on the "Apps" tab. At the bottom of the tab, click "Manage Developer Apps"
+- Create a new app to obtain client_id and client_secret.
+- To find your redirect_uri, type the following into the command line opened to the project root directory: zapier describe
+
 Find out more on the latest docs: https://github.com/zapier/zapier-platform/blob/master/packages/cli/README.md.
