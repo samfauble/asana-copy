@@ -32,7 +32,7 @@ const performSearch = async (z, bundle) => {
 // create a particular new task by name
 
 const performCreate = async (z, bundle) => {
-  const {assignee_id, due_date, task_name, notes, start_date, workspace_gid} = bundle.inputData
+  const {assignee_id, due_date, task_name, notes, workspace_gid} = bundle.inputData
   const url = 'https://app.asana.com/api/1.0/tasks'
   const response = await z.request({
     method: 'POST',
@@ -42,7 +42,6 @@ const performCreate = async (z, bundle) => {
                 due_date, 
                 task_name, 
                 notes, 
-                start_date, 
                 workspace_gid
               )
   });

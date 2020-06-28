@@ -1,6 +1,6 @@
 const uid = require('uid')
 
-const taskBody = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
+const taskBody = (assigneeId, dueDate, taskName, notes, workspace) => {
     return {
       "data": {
         "approval_status": "pending",
@@ -18,7 +18,6 @@ const taskBody = (assigneeId, dueDate, taskName, notes, startDate, workspace) =>
         "name": taskName,
         "notes": notes,
         "resource_subtype": "default_task",
-        "start_on": startDate,
         "tags": [],
         "workspace": workspace
       }

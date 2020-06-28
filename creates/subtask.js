@@ -8,7 +8,6 @@ const perform = async (z, bundle) => {
           subtask_due_date, 
           subtask_name, 
           subtask_notes, 
-          subtask_start_date, 
           workspace_gid
         } = bundle.inputData
   
@@ -19,8 +18,7 @@ const perform = async (z, bundle) => {
                 assignee_id, 
                 subtask_due_date, 
                 subtask_name, 
-                subtask_notes, 
-                subtask_start_date, 
+                subtask_notes,  
                 workspace_gid
                 ),
     params: {

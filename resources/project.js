@@ -25,7 +25,7 @@ const performList = async (z, bundle) => {
 };
 
 // creates a new task
-const projectBody = (author, projectStatus, dueDate, projectNotes, startDate, workspace_gid) => {
+const projectBody = (author, projectStatus, dueDate, projectNotes, workspace_gid) => {
   return {
       "data": {
         "archived": false,
@@ -55,7 +55,6 @@ const projectBody = (author, projectStatus, dueDate, projectNotes, startDate, wo
         "name": "Stuff to buy",
         "notes": projectNotes,
         "public": false,
-        "start_on": startDate,
         "workspace": {
           "gid": workspace_gid,
           "resource_type": 'workspace',
@@ -72,7 +71,6 @@ const performCreate = async (z, bundle) => {
           project_status, 
           project_due_date, 
           project_notes, 
-          project_start_date, 
           workspace_gid
         } = bundle.inputData
 
@@ -84,8 +82,7 @@ const performCreate = async (z, bundle) => {
                   project_author, 
                   project_status, 
                   project_due_date,
-                  project_notes, 
-                  project_start_date, 
+                  project_notes,  
                   workspace_gid
                 ),
     },
