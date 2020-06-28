@@ -104,8 +104,8 @@ module.exports = {
 
   list: {
     display: {
-      label: 'List Project Resource',
-      description: 'Lists projects.'
+      label: 'New Project',
+      description: 'Triggers when new project added.'
     },
     operation: {
       perform: performList,
@@ -115,8 +115,8 @@ module.exports = {
 
   create: {
     display: {
-      label: 'Create Project Resource',
-      description: 'Creates a new project.'
+      label: 'Create Project',
+      description: 'Triggers when new project added.'
     },
     operation: {
       inputFields: [
@@ -163,7 +163,7 @@ module.exports = {
   // returned records, and have obvious placeholder values that we can show to any user.
   // In this resource, the sample is reused across all methods
   sample: {
-    id: 1,
+    id: "1",
     name: 'Test'
   },
 

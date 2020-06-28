@@ -14,7 +14,7 @@ const performList = async (z, bundle) => {
   res.map((item) => {
     list.push({id: item.id, name: item.name})
   })
-  
+
   return list
 };
 
@@ -25,8 +25,8 @@ module.exports = {
 
   list: {
     display: {
-      label: 'New Workspace Resource',
-      description: 'Lists the workspaces.'
+      label: 'New Workspace',
+      description: 'Triggers when new workspace added.'
     },
     operation: {
       perform: performList,
@@ -35,7 +35,7 @@ module.exports = {
   },
 
   sample: {
-    id: 1,
+    id: "1",
     name: 'Test'
   },
 

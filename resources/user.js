@@ -20,7 +20,7 @@ module.exports = {
   list: {
     display: {
       label: 'New User',
-      description: 'Lists the users.'
+      description: 'Triggers when new user added.'
     },
     operation: {
       perform: performList,
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   sample: {
-    id: 1,
+    id: "1",
     name: 'Test'
   },
 

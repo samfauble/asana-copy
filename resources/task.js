@@ -57,8 +57,8 @@ module.exports = {
 
   list: {
     display: {
-      label: 'New Task Resource',
-      description: 'Lists the tasks.'
+      label: 'New Task',
+      description: 'Triggers when a new task added.'
     },
     operation: {
       perform: performList,
@@ -76,7 +76,7 @@ module.exports = {
 
   search: {
     display: {
-      label: 'Find Task Resource',
+      label: 'Find Task',
       description: 'Finds a task give.'
     },
     operation: {
@@ -99,7 +99,7 @@ module.exports = {
 
   create: {
     display: {
-      label: 'Create Task Resource',
+      label: 'Create Task',
       description: 'Creates a new task.'
     },
     operation: {
@@ -162,7 +162,7 @@ module.exports = {
   // returned records, and have obvious placeholder values that we can show to any user.
   // In this resource, the sample is reused across all methods
   sample: {
-    id: 1,
+    id: "1",
     name: 'Test'
   },
 
