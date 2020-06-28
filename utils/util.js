@@ -1,5 +1,6 @@
 const uid = require('uid')
 
+//Returns a task/subtask object
 const taskBody = (assigneeId, dueDate, taskName, notes, workspace) => {
     return {
       "data": {

@@ -29,8 +29,7 @@ const performSearch = async (z, bundle) => {
   return response.data;
 };
 
-// create a particular new task by name
-
+// create a new task
 const performCreate = async (z, bundle) => {
   const {assignee_id, due_date, task_name, notes, workspace_gid} = bundle.inputData
   const url = 'https://app.asana.com/api/1.0/tasks'
@@ -49,6 +48,7 @@ const performCreate = async (z, bundle) => {
   return response.data;
 };
 
+//Exports 
 module.exports = {
   
   key: 'task',

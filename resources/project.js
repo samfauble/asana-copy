@@ -24,7 +24,7 @@ const performList = async (z, bundle) => {
   return response.data.data
 };
 
-// creates a new task
+// returns a project object
 const projectBody = (author, projectStatus, dueDate, projectNotes, workspace_gid) => {
   return {
       "data": {
@@ -64,6 +64,7 @@ const projectBody = (author, projectStatus, dueDate, projectNotes, workspace_gid
   }
 }
 
+// Create a new project
 const performCreate = async (z, bundle) => {
   const url = `https://app.asana.com/api/1.0/projects`
   const {
@@ -94,6 +95,7 @@ const performCreate = async (z, bundle) => {
   return response.data;
 };
 
+//Exports 
 module.exports = {
   
   key: 'project',
