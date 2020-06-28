@@ -1,4 +1,4 @@
-const { body } = require('../utils/util')
+const { taskBody } = require('../utils/util')
 
 // create a particular subtask by name
 const perform = async (z, bundle) => {
@@ -15,7 +15,7 @@ const perform = async (z, bundle) => {
   const response = await z.request({
     method: 'POST',
     url,
-    body: body(
+    body: taskBody(
                 assignee_id, 
                 subtask_due_date, 
                 subtask_name, 

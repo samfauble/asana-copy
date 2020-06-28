@@ -25,7 +25,7 @@ const performList = async (z, bundle) => {
 };
 
 // creates a new task
-const body = (author, projectStatus, dueDate, projectNotes, startDate, workspace_gid) => {
+const projectBody = (author, projectStatus, dueDate, projectNotes, startDate, workspace_gid) => {
   return {
       "data": {
         "archived": false,
@@ -80,7 +80,7 @@ const performCreate = async (z, bundle) => {
     method: 'POST',
     url,
     body: {
-      data: body(
+      data: projectBody(
                   project_author, 
                   project_status, 
                   project_due_date,

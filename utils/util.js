@@ -1,6 +1,6 @@
 const uid = require('uid')
 
-const body = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
+const taskBody = (assigneeId, dueDate, taskName, notes, startDate, workspace) => {
     return {
       "data": {
         "approval_status": "pending",
@@ -37,5 +37,5 @@ const nameIdKey = (objectList, toBecomeIdKey) => {
 
 module.exports = {
     nameIdKey, 
-    body
+    taskBody
 }

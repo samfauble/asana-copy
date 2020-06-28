@@ -1,4 +1,4 @@
-const { nameIdKey, body } = require('../utils/util')
+const { nameIdKey, taskBody } = require('../utils/util')
 
 // get a list of tasks
 const performList = async (z, bundle) => {
@@ -37,7 +37,7 @@ const performCreate = async (z, bundle) => {
   const response = await z.request({
     method: 'POST',
     url,
-    body: body(
+    body: taskBody(
                 assignee_id, 
                 due_date, 
                 task_name, 
